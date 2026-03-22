@@ -5,8 +5,10 @@
             
         </div>
         <!-- right -->
-        <div class="bg-white w-1/2 h-full flex pt-10 px-10">
-            <slot />
+        <div class="bg-[#F8FAFC] w-1/2 h-full flex pt-10 px-10">
+            <div class="w-full pt-2">
+                <slot />
+            </div>
         </div>
     </div>
 </template>
