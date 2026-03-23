@@ -31,11 +31,17 @@
   </div>
 
   <!-- Others login -->
-  <div class="flex justify-center items-center gap-4 mt-4 mb-8 w-full ">
-    <Icon name="uil:facebook"
-      class="text-[40px] text-black hover:text-blue-600 hover:scale-110 transition-all duration-300 cursor-pointer" />
-    <Icon name="uil:google"
-      class="text-[40px] text-black hover:text-red-600 hover:scale-110 transition-all duration-300 cursor-pointer" />
+  <div class="mt-4 mb-8 w-full flex justify-center bg-gray-200">
+    <!-- gmail -->
+    <div class="bg-white w-1/3  p-2 flex justify-center items-center">
+      <div class="w-12 h-[2rem]">
+        <img src="../assets/images/icon_google.png" alt="" class="w-full h-full object-cover">
+      </div>
+
+      <div class="font-sarabun font-bold">
+        <p>Sign up to Google</p>
+      </div>
+    </div>
   </div>
 
   <!-- Register -->
