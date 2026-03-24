@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen w-screen flex">
+    <div class="h-screen w-screen flex font-sarabun">
         <!-- left -->
         <div class="bg-gradient-to-t from-black to-yellow-500 w-1/2 h-full">
             
