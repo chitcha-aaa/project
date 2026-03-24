@@ -22,31 +22,43 @@
       </div>
 
       <!-- password -->
-      <div class="font-sarabun mt-2">
-        <label for="password" class="text-[13px] font-bold text-gray-500">รหัสผ่าน</label>
+      <div class="font-sarabun mt-3">
+        <label for="password" class="block text-[13px] font-bold text-gray-500 mb-1">รหัสผ่าน</label>
         <!-- ช่องใส่รหัสผ่าน -->
         <input for="text" id="password"
           class="w-full h-10 border px-3 py-2 border-gray-300 rounded-xl font-sarabun text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
       </div>
 
-      <div class="font-sarabun mt-2">
-        <label for="password" class="text-[13px] font-bold text-gray-500">ยืนยันรหัสผ่าน</label>
+      <div class="font-sarabun mt-3">
+        <label for="password" class="block text-[13px] font-bold text-gray-500 mb-1">ยืนยันรหัสผ่าน</label>
         <!-- ช่องใส่รหัสผ่าน -->
         <input for="text" id="password"
           class="w-full h-10 border px-3 py-2 border-gray-300 rounded-xl font-sarabun text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
       </div>
+
+      <button type="submit"
+        class="bg-[#1A1A1A] text-white p-3 w-full rounded-3xl font-sarabun font-bold hover:bg-[#404040] cursor-pointer transition-colors duration-300 ease-in-out mt-4">
+        ลงทะเบียน
+      </button>
 
       <div class="flex items-center mt-5">
-        <div class="flex-grow border-t border-gray-500"></div>
-        <span class="flex-shrink mx-4 text-gray-600 font-bold font-sarabun text-sm">หรือ สมัครด้วย</span>
-        <div class="flex-grow border-t border-gray-500"></div>
+        <div class="flex-grow border-t border-gray-300"></div>
+        <span class="flex-shrink mx-4 text-gray-500 font-bold font-sarabun text-sm">หรือ สมัครด้วย</span>
+        <div class="flex-grow border-t border-gray-300"></div>
       </div>
 
-      <div class="flex justify-center items-center gap-4 mt-4 w-full ">
-        <Icon name="uil:facebook"
-          class="text-[40px] text-black hover:text-blue-600 hover:scale-110 transition-all duration-300 cursor-pointer" />
-        <Icon name="uil:google"
-          class="text-[40px] text-black hover:text-red-600 hover:scale-110 transition-all duration-300 cursor-pointer" />
+      <div class="mt-4 mb-4 w-full flex justify-center ">
+        <!-- gmail -->
+        <div
+          class="bg-white w-1/3  p-2 flex justify-center items-center rounded-3xl cursor-pointer hover:shadow-md hover:scale-105 transition-all">
+          <div class="w-12 h-[2rem]">
+            <img src="../assets/images/icon_google.png" alt="" class="w-full h-full object-cover">
+          </div>
+
+          <div class="font-sarabun">
+            <p>Sign up to Google</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
