@@ -68,7 +68,7 @@
             <div class="relative">
 
                 <button @click="isOpen = !isOpen" type="button"
-                    class="w-full bg-[#C2C2C2] hover:bg-[#B0B0B0] transition-colors rounded-2xl px-6 py-4 flex items-center justify-between focus:outline-none">
+                    class="w-full bg-[#C2C2C2] hover:bg-[#B0B0B0] cursor-pointer transition-colors rounded-2xl px-6 py-4 flex items-center justify-between focus:outline-none">
                     <span class="text-gray-700 font-medium">
                         {{ selectedPrefix || 'เลือกคำนำหน้าชื่อ' }}
                     </span>
