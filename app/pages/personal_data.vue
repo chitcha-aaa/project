@@ -110,7 +110,7 @@ const selectedPrefix = ref('')
 const options = ['นาย', 'นาง', 'นางสาว', 'ดร.', 'ศาสตราจารย์']
 
 // ฟังก์ชันเลือกค่า
-const selectOption = (val) => {
+const selectOption = (val : string) => {
   selectedPrefix.value = val
   isOpen.value = false
 }
