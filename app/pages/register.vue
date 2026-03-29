@@ -24,7 +24,7 @@
         <div class="font-sarabun mt-3">
           <label for="password" class="block text-[13px] font-bold text-gray-500 mb-1">รหัสผ่าน</label>
           <!-- ช่องใส่รหัสผ่าน -->
-          <input for="text" id="password" v-model="form.password" required
+          <input for="text" id="password" type="password" v-model="form.password" required
             class="w-full h-10 border px-3 py-2 border-gray-300 rounded-xl font-sarabun text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
         </div>
 
@@ -32,7 +32,7 @@
         <div class="font-sarabun mt-3">
           <label for="password" class="block text-[13px] font-bold text-gray-500 mb-1">ยืนยันรหัสผ่าน</label>
           <!-- ช่องใส่รหัสผ่าน -->
-          <input for="text" id="password" v-model="form.password" required
+          <input for="text" id="password_submit" type="password" v-model="form.password_submit" required
             class="w-full h-10 border px-3 py-2 border-gray-300 rounded-xl font-sarabun text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
         </div>
 
@@ -71,13 +71,18 @@ definePageMeta({
   layout: 'log-regis'
 })
 
+
 const form = ref({
   email: '',
   username: '',
-  password: ''
+  password: '',
+  password_submit:''
 })
 
 const handle_register = async () => {
-  console.log('ข้อมูลพร้อมส่งไป API แล้ว!', form.value);
+  if (form.value.password !== form.value.password_submit) {
+    alert('รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกันครับ!')
+    return
+  }
 }
 </script>
