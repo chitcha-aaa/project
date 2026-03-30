@@ -37,6 +37,32 @@
               </svg>
             </button>
           </div>
+
+          <!-- เกณฑ์การตั้งรหัสผ่าน -->
+          <div v-if="form.password.length > 0" class="mt-2 text-[12px] font-sarabun text-gray-500 transition-all duration-300">
+            <ul class="space-y-1">
+              <li :class="passwordCriteria.length ? 'text-green-500' : 'text-gray-400'" class="flex items-center gap-2 transition-colors duration-200">
+                <svg v-if="passwordCriteria.length" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                <span v-else class="w-2 h-2 rounded-full bg-gray-300 ml-0.5 mr-0.5"></span>
+                ขั้นต่ำ 12 ตัวอักษรขึ้นไป
+              </li>
+              <li :class="passwordCriteria.uppercase ? 'text-green-500' : 'text-gray-400'" class="flex items-center gap-2 transition-colors duration-200">
+                <svg v-if="passwordCriteria.uppercase" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                <span v-else class="w-2 h-2 rounded-full bg-gray-300 ml-0.5 mr-0.5"></span>
+                อักษรตัวพิมพ์ใหญ่ (A-Z)
+              </li>
+              <li :class="passwordCriteria.lowercase ? 'text-green-500' : 'text-gray-400'" class="flex items-center gap-2 transition-colors duration-200">
+                <svg v-if="passwordCriteria.lowercase" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                <span v-else class="w-2 h-2 rounded-full bg-gray-300 ml-0.5 mr-0.5"></span>
+                อักษรตัวพิมพ์เล็ก (a-z)
+              </li>
+              <li :class="passwordCriteria.number ? 'text-green-500' : 'text-gray-400'" class="flex items-center gap-2 transition-colors duration-200">
+                <svg v-if="passwordCriteria.number" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                <span v-else class="w-2 h-2 rounded-full bg-gray-300 ml-0.5 mr-0.5"></span>
+                ตัวเลข (0-9)
+              </li>
+            </ul>
+          </div>
         </div>
 
         <!-- password_submit -->
@@ -44,9 +70,15 @@
           <label for="password_submit" class="block text-[13px] font-bold text-gray-500 mb-1">ยืนยันรหัสผ่าน</label>
           <!-- ช่องใส่รหัสผ่าน -->
           <div class="relative">
+            <!-- Overlay ดักจับการคลิกถ้าไม่ผ่านเกณฑ์ -->
+            <div v-if="!isPasswordValid" @click="alert_invalid_password" class="absolute inset-0 z-10 "></div>
+            
             <input :type="showPasswordSubmit ? 'text' : 'password'" id="password_submit" v-model="form.password_submit" required
-              class="w-full h-10 border px-3 py-2 border-gray-300 rounded-xl font-sarabun text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 pr-10">
-            <button type="button" @click="showPasswordSubmit = !showPasswordSubmit" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none">
+              :readonly="!isPasswordValid"
+              @focus="!isPasswordValid && alert_invalid_password()"
+              :class="!isPasswordValid ? 'bg-gray-50 text-gray-400 focus:ring-0 focus:border-gray-300' : 'focus:ring-1 focus:ring-blue-500 focus:border-blue-500'"
+              class="w-full h-10 border px-3 py-2 border-gray-300 rounded-xl font-sarabun text-sm focus:outline-none pr-10">
+            <button type="button" @click="showPasswordSubmit = !showPasswordSubmit" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none" :class="{'opacity-50': !isPasswordValid}">
               <svg v-if="showPasswordSubmit" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
               </svg>
@@ -55,6 +87,21 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </button>
+          </div>
+          
+          <!-- แสดงสถานะยืนยันรหัสผ่าน -->
+          <div v-if="form.password_submit.length > 0 && passwordMatchStatus !== 'idle'" class="mt-2 text-[12px] font-sarabun h-4 transition-all duration-300">
+            <span v-if="passwordMatchStatus === 'match'" class="text-green-500 flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              รหัสผ่านถูกต้อง
+            </span>
+            <span v-else-if="passwordMatchStatus === 'mismatch'" class="text-red-500 flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+              รหัสผ่านไม่ตรงกัน
+            </span>
+            <span v-else-if="passwordMatchStatus === 'typing'" class="text-gray-400 flex items-center gap-1 animate-pulse">
+              กำลังตรวจสอบ...
+            </span>
           </div>
         </div>
 
@@ -128,6 +175,49 @@ const form = ref({
 const showPassword = ref(false)
 const showPasswordSubmit = ref(false)
 
+const passwordCriteria = computed(() => {
+  const pwd = form.value.password
+  return {
+    length: pwd.length >= 12,
+    uppercase: /[A-Z]/.test(pwd),
+    lowercase: /[a-z]/.test(pwd),
+    number: /[0-9]/.test(pwd)
+  }
+})
+
+const isPasswordValid = computed(() => {
+  return passwordCriteria.value.length &&
+         passwordCriteria.value.uppercase &&
+         passwordCriteria.value.lowercase &&
+         passwordCriteria.value.number
+})
+
+const alert_invalid_password = () => {
+  alert('โปรดตั้งรหัสผ่านให้ถูกต้องตามเกณฑ์')
+}
+
+const passwordMatchStatus = ref<'idle' | 'typing' | 'match' | 'mismatch'>('idle')
+let typingTimer: any = null
+
+watch([() => form.value.password, () => form.value.password_submit], ([newPwd, newSubmit]) => {
+  if (!newSubmit) {
+    passwordMatchStatus.value = 'idle'
+    if (typingTimer) clearTimeout(typingTimer)
+    return
+  }
+
+  passwordMatchStatus.value = 'typing'
+  if (typingTimer) clearTimeout(typingTimer)
+
+  typingTimer = setTimeout(() => {
+    if (form.value.password === form.value.password_submit) {
+      passwordMatchStatus.value = 'match'
+    } else {
+      passwordMatchStatus.value = 'mismatch'
+    }
+  }, 3000)
+})
+
 // ตัวแปรสำหรับระบบ OTP
 const showOtpModal = ref(false)
 const otpInput = ref('')
@@ -135,6 +225,11 @@ const expectedOtp = ref('') // เก็บชั่วคราวจาก Bac
 const isLoading = ref(false)
 
 const handle_register = async () => {
+  if (!isPasswordValid.value) {
+    alert('กรุณาตั้งรหัสผ่านให้ตรงตามเกณฑ์ที่กำหนดครับ!')
+    return
+  }
+
   if (form.value.password !== form.value.password_submit) {
     alert('รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกันครับ!')
     return
