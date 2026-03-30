@@ -49,7 +49,7 @@ async function getUsers() {
     users.value = data
   }
 }
-}
+
 
 onMounted(() => {
   getUsers()

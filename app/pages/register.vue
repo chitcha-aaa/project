@@ -58,9 +58,9 @@
           </div>
         </div>
 
-        <button type="submit"
-          class="bg-[#1A1A1A] text-white p-3 w-full rounded-3xl font-sarabun font-bold hover:bg-[#404040] cursor-pointer transition-colors duration-300 ease-in-out mt-4">
-          ลงทะเบียน
+        <button type="submit" :disabled="isLoading"
+          class="bg-[#1A1A1A] text-white p-3 w-full rounded-3xl font-sarabun font-bold hover:bg-[#404040] disabled:bg-gray-400 cursor-pointer transition-colors duration-300 ease-in-out mt-4">
+          {{ isLoading ? 'กำลังส่งรหัส OTP...' : 'ลงทะเบียน' }}
         </button>
 
         <div class="flex items-center mt-5">
@@ -84,6 +84,30 @@
         </div>
       </div>
     </form>
+
+    <!-- Modal: OTP Popup -->
+    <div v-if="showOtpModal" class="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+      <div class="bg-white p-8 rounded-2xl w-[90%] sm:w-[400px] shadow-2xl flex flex-col items-center">
+        <h2 class="font-sarabun text-2xl font-bold mb-2">ยืนยันอีเมล</h2>
+        <p class="font-sarabun text-sm text-gray-500 mb-6 text-center">
+          เราได้ส่งรหัส OTP ไปยังอีเมล <br/><span class="font-bold text-black">{{ form.email }}</span>
+        </p>
+
+        <input type="text" v-model="otpInput" placeholder="กรอกรหัส 6 หลัก" maxlength="6"
+          class="w-full h-12 border border-gray-300 rounded-xl px-4 text-center text-xl font-bold tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500 mb-6">
+        
+        <button @click="verify_otp"
+          class="w-full bg-blue-600 text-white p-3 rounded-full font-sarabun font-bold hover:bg-blue-700 transition mb-3">
+          ยืนยันรหัส OTP
+        </button>
+
+        <button @click="showOtpModal = false"
+          class="w-full bg-gray-100 text-gray-600 p-3 rounded-full font-sarabun font-bold hover:bg-gray-200 transition">
+          ยกเลิก
+        </button>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -104,10 +128,49 @@ const form = ref({
 const showPassword = ref(false)
 const showPasswordSubmit = ref(false)
 
+// ตัวแปรสำหรับระบบ OTP
+const showOtpModal = ref(false)
+const otpInput = ref('')
+const expectedOtp = ref('') // เก็บชั่วคราวจาก Backend ไว้เทียบ
+const isLoading = ref(false)
+
 const handle_register = async () => {
   if (form.value.password !== form.value.password_submit) {
     alert('รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกันครับ!')
     return
+  }
+
+  // เรียกใช้ API ส่งอีเมล
+  isLoading.value = true
+  try {
+    const response = await $fetch('/api/email', {
+      method: 'POST',
+      body: { email: form.value.email }
+    })
+
+    if (response) {
+      alert('เช็คอีเมลของคุณเพื่อดูรหัส OTP!')
+      showOtpModal.value = true
+      expectedOtp.value = (response as any).otpDebug // ดึงค่ามารอเทียบ
+    } else {
+      alert('เกิดข้อผิดพลาดจากเซิร์ฟเวอร์')
+    }
+  } catch (error) {
+    alert('ส่งอีเมลไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่อ')
+    console.error(error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const verify_otp = () => {
+  if (otpInput.value === expectedOtp.value && otpInput.value !== '') {
+    alert('ลงทะเบียนสำเร็จ! ยินดีต้อนรับเข้าสู่ระบบ')
+    showOtpModal.value = false
+    // นำทางไปหน้าเข้าสู่ระบบ หรือหน้าอื่น:
+    // navigateTo('/login')
+  } else {
+    alert('รหัส OTP ไม่ถูกต้อง กรุณาลองใหม่')
   }
 }
 </script>
