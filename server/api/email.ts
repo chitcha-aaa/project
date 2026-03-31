@@ -25,21 +25,31 @@ export default defineEventHandler(async (event) => {
 
     // 4. ตั้งค่าหัวข้อ และ หน้าตาของอีเมล
     const mailOptions = {
-      from: `"ระบบลงทะเบียน" <${process.env.NAME_APP}>`, // เชื่อมกับอีเมลด้านบน
+      from: `"BRICC"`, // เชื่อมกับอีเมลด้านบน
       to: userEmail,
-      subject: 'รหัส OTP คู่หูสำหรับลงทะเบียน',
+      subject: 'รหัส OTP สำหรับลงทะเบียนงาน BRICC',
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-          <h2 style="color: #333;">ยืนยันการลงทะเบียนของคุณ</h2>
-          <p>สวัสดีครับ/ค่ะ,</p>
-          <p>ขอบคุณที่สมัครสมาชิกกับเรา นี่คือรหัส OTP ของคุณ:</p>
-          <div style="text-align: center; margin: 30px 0;">
-            <b style="font-size: 32px; color: #4F46E5; letter-spacing: 5px;">${otpCode}</b>
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
+          </style>
+        </head>
+        <body>
+          <div style="font-family: 'Sarabun', Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+            <h2 style="color: #333;">ยืนยันการลงทะเบียนของคุณ</h2>
+            <p>สวัสดีครับ/ค่ะ,</p>
+            <p>ขอบคุณที่สมัครสมาชิกกับเรา นี่คือรหัส OTP ของคุณ:</p>
+            <div style="text-align: center; margin: 30px 0;">
+              <b style="font-size: 32px; color: #4F46E5; letter-spacing: 5px;">${otpCode}</b>
+            </div>
+            <p>โปรดนำรหัสนี้ไปกรอกในหน้าเว็บเพื่อยืนยันบัญชีของคุณ รหัสผ่านจะหมดอายุภายใน 2 นาที</p>
+            <hr style="border: none; border-top: 1px solid #eee; margin-top: 20px;">
+            <p style="font-size: 12px; color: #999;">หากคุณไม่ได้ลงทะเบียน กรุณาเพิกเฉยต่ออีเมลฉบับนี้</p>
           </div>
-          <p>โปรดนำรหัสนี้ไปกรอกในหน้าเว็บเพื่อยืนยันบัญชีของคุณ รหัสผ่านจะหมดอายุภายใน 5 นาที</p>
-          <hr style="border: none; border-top: 1px solid #eee; margin-top: 20px;">
-          <p style="font-size: 12px; color: #999;">หากคุณไม่ได้ลงทะเบียน กรุณาเพิกเฉยต่ออีเมลฉบับนี้</p>
-        </div>
+        </body>
+        </html>
       `
     }
 
