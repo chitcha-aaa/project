@@ -5,7 +5,7 @@
   <!-- Form Setup -->
   <form @submit.prevent="handleLogin">
     <!-- Username / Email -->
-    <label for="username" class="font-bold ">Username / Email</label>
+    <label for="username" class="font-bold ">Email</label>
     <input type="text" id="username" placeholder="กรอกชื่อผู้ใช้หรืออีเมล" v-model="form.username" required
       class="w-full h-10 border px-2 py-2 mt-1 border-gray-300 rounded-2xl font-sarabun text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 mb-4">
 
@@ -134,8 +134,31 @@ const handleLogin = async () => {
         showAlert(`เกิดข้อผิดพลาด: ${error.message}`)
       }
     } else {
-      // ล็อกอินผ่านฉลุย พาไปหน้าผู้แต่งบทความ (Author Home) เลย
-      navigateTo('/author/home')
+      // ดึง role จากตาราง profiles ของผู้ใช้
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', data.user.id)
+        .single() as { data: { role: string } | null, error: any }
+        
+      if (profileError || !profile) {
+        console.error('Error fetching profile:', profileError)
+        showAlert('เข้าสู่ระบบสำเร็จแต่ไม่พบข้อมูลสิทธิ์ (Role) โปรดติดต่อผู้ดูแลระบบ')
+        return
+      }
+
+      const userRole = profile.role?.toLowerCase() || ''
+
+      // ส่งไปยังหน้า Dashboard ตาม Role ตัวพิมพ์เล็ก-ใหญ่ถือว่าเหมือนกัน
+      if (userRole === 'admin') {
+        return navigateTo('/admin/home')
+      } else if (userRole === 'reviewer') {
+        return navigateTo('/reviewer/home')
+      } else if (userRole === 'author') {
+        return navigateTo('/author/home')
+      } else {
+        showAlert('บัญชีของคุณไม่มีสิทธิ์เข้าถึงระบบใดๆ')
+      }
     }
   } catch (err) {
     console.error(err)

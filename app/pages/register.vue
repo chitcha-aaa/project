@@ -6,18 +6,11 @@
         <p class="font-sarabun text-small font-bold">ข้อมูลบัญชี</p>
         <div class="flex flex-col sm:flex-row gap-4 mt-2">
           <!-- email -->
-          <div class="flex flex-col w-full sm:w-1/2">
+          <div class="flex flex-col w-full ">
             <label for="email" class="font-bold text-gray-500 font-sarabun text-[13px] mb-1">อีเมล <span class="text-red-400">*</span></label>
             <input type="text" id="email" v-model="form.email" required placeholder="example@gmail.com"
               class="w-full h-10 border px-3 py-2 border-gray-300 rounded-xl font-sarabun text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
             <p class="text-[11px] text-gray-500 mt-1 font-sarabun">โปรดใช้อีเมลที่รับจดหมายได้จริงเพื่อยืนยัน OTP</p>
-          </div>
-
-          <!-- username -->
-          <div class="flex flex-col w-full sm:w-1/2">
-            <label for="username" class="font-bold text-gray-500 font-sarabun text-[13px] mb-1">ชื่อผู้ใช้</label>
-            <input type="text" id="username" v-model="form.username" required
-              class="w-full h-10 border px-3 py-2 border-gray-300 rounded-xl font-sarabun text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
           </div>
         </div>
 
