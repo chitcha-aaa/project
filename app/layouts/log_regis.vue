@@ -5,7 +5,7 @@
             
         </div>
         <!-- right -->
-        <div class="bg-[#F8FAFC] w-1/2 h-full flex pt-10 px-10">
+        <div class="bg-[#F8FAFC] w-full lg:w-1/2 h-full pt-5 px-10 overflow-y-auto pb-10">
             <div class="w-full pt-2">
                 <slot />
             </div>
