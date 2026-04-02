@@ -30,6 +30,11 @@
       <a href="#" class="font-sarabun text-[10px] font-bold text-[#8B6D00] hover:underline ">ลืมรหัสผ่าน?</a>
     </div>
 
+    <button type="button" @click="navigateTo('/')"
+          class="bg-gray-300 border border-none text-gray-700 p-3 w-full rounded-3xl font-sarabun font-bold hover:bg-red-400 hover:text-white cursor-pointer transition-colors duration-100 ease-in-out mb-2">
+          ยกเลิก 
+        </button>
+    
     <!-- Login button -->
     <button type="submit" :disabled="isLoading"
       class="bg-[#1A1A1A] text-white p-3 w-full rounded-3xl font-sarabun font-bold hover:bg-[#404040] disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer transition-colors duration-300 ease-in-out">
@@ -118,14 +123,14 @@ const handleLogin = async () => {
 
   isLoading.value = true
   try {
+    console.log('[Login] 📧 กำลัง login ด้วย email:', form.value.username)
     const { data, error } = await supabase.auth.signInWithPassword({
       email: form.value.username,
       password: form.value.password,
     })
 
     if (error) {
-      console.error(error)
-      // ดักจับ Error Message ที่ใช้บ่อยให้ออกมาเป็นภาษาไทยชัดเจน
+      console.error('[Login] signInWithPassword error:', error)
       if (error.message.includes('Invalid login credentials')) {
         showAlert('อีเมลหรือรหัสผ่านไม่ถูกต้อง โปรดลองอีกครั้งคุณอาจจะพิมพ์ผิด')
       } else if (error.message.includes('Email not confirmed')) {
@@ -134,34 +139,44 @@ const handleLogin = async () => {
         showAlert(`เกิดข้อผิดพลาด: ${error.message}`)
       }
     } else {
+      console.log('[Login] ✅ signInWithPassword สำเร็จ | user.id =', data.user.id)
+      console.log('[Login] user_metadata =', data.user.user_metadata)
+
       // ดึง role จากตาราง profiles ของผู้ใช้
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('role')
         .eq('id', data.user.id)
         .single() as { data: { role: string } | null, error: any }
-        
+
+      console.log('[Login] profiles query result → profile =', profile, '| error =', profileError)
+
       if (profileError || !profile) {
-        console.error('Error fetching profile:', profileError)
+        console.error('[Login] ❌ ไม่พบ profile:', profileError)
         showAlert('เข้าสู่ระบบสำเร็จแต่ไม่พบข้อมูลสิทธิ์ (Role) โปรดติดต่อผู้ดูแลระบบ')
         return
       }
 
       const userRole = profile.role?.toLowerCase() || ''
+      console.log('[Login] userRole =', `"${userRole}"`)
 
-      // ส่งไปยังหน้า Dashboard ตาม Role ตัวพิมพ์เล็ก-ใหญ่ถือว่าเหมือนกัน
+      // ใช้ window.location.href (Hard Redirect) แทน navigateTo()
       if (userRole === 'admin') {
-        return navigateTo('/admin/home')
+        console.log('[Login] → redirect ไป /admin/home')
+        window.location.href = '/admin/home'
       } else if (userRole === 'reviewer') {
-        return navigateTo('/reviewer/home')
+        console.log('[Login] → redirect ไป /reviewer/home')
+        window.location.href = '/reviewer/home'
       } else if (userRole === 'author') {
-        return navigateTo('/author/home')
+        console.log('[Login] → redirect ไป /author/home')
+        window.location.href = '/author/home'
       } else {
+        console.warn('[Login] ⚠️ role ไม่ตรงกับที่รองรับ → role =', `"${userRole}"`)
         showAlert('บัญชีของคุณไม่มีสิทธิ์เข้าถึงระบบใดๆ')
       }
     }
   } catch (err) {
-    console.error(err)
+    console.error('[Login] ❌ catch error:', err)
     showAlert('เซิร์ฟเวอร์ขัดข้อง โปรดตรวจสอบอินเทอร์เน็ตของคุณ')
   } finally {
     isLoading.value = false
