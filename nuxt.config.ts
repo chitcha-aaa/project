@@ -23,7 +23,8 @@ export default defineNuxtConfig({
   ],
 
   supabase: {
-    // ปิดระบบยามเฝ้าหน้าเว็บ (Global Middleware) ทิ้งชั่วคราว เพื่อให้เข้าได้ทุกหน้าตอนกำลังทำตอนแรก
-    redirect: false
+    redirect: false,
+    // Service Role Key สำหรับ server-side เท่านั้น (invite user, admin operations)
+    serviceKey: process.env.SUPABASE_SERVICE_KEY,
   }
 });
