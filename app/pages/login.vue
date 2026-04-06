@@ -30,9 +30,15 @@
       <a href="#" class="font-sarabun text-[10px] font-bold text-[#8B6D00] hover:underline ">ลืมรหัสผ่าน?</a>
     </div>
 
+    <!-- Cancel button -->
+    <NuxtLink to="/"
+      class="block text-center bg-gray-300 p-3 w-full rounded-3xl font-sarabun font-bold text-gray-700 hover:bg-red-400 hover:text-white border-none cursor-pointer transition-colors duration-200 ease-in-out mb-3">
+      ยกเลิก
+    </NuxtLink>
+
     <!-- Login button -->
     <button type="submit" :disabled="isLoading"
-      class="bg-[#1A1A1A] text-white p-3 w-full rounded-3xl font-sarabun font-bold hover:bg-[#404040] disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer transition-colors duration-300 ease-in-out">
+      class="bg-[#1A1A1A] text-white p-3 w-full rounded-3xl font-sarabun font-bold hover:bg-[#404040] disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer transition-colors duration-200 ease-in-out">
       {{ isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ' }}
     </button>
   </form>
