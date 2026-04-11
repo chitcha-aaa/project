@@ -1,50 +1,8 @@
 <template>
-  <div class="min-h-screen bg-white font-sarabun">
-
-    <!-- Navbar -->
-    <nav class="w-full bg-[#E8E8E8] px-6 py-3 flex items-center justify-between shadow-sm">
-      <!-- Left: Site name -->
-      <span class="text-sm font-bold text-gray-800 tracking-wide">
-        งาน BRICC การประกวดโครงงานวิจัย
-      </span>
-
-      <!-- Menu -->
-      <div>
-        <li class="flex gap-4 text-sm">
-          <ul>แผงควบคุมหลัก</ul>
-          <ul>บทความของฉัน</ul>
-          <ul>คลังบทความย้อนหลัง</ul>
-          <ul>การชำระเงิน</ul>
-          <ul>ตารางนำเสนอ</ul>
-          <ul>รางวัล/เกียรติบัตร</ul>
-          <ul>ดาวน์โหลด</ul>
-          <ul>เกี่ยวกับงานประชุม</ul>
-          <ul>คู่มือ/ติดต่อ</ul>
-        </li>
-      </div>
-
-      <!-- Right: ถ้า login แล้วแสดงปุ่มไปหน้า Dashboard, ถ้ายังไม่ login แสดงปุ่มเข้าสู่ระบบ -->
-      <NuxtLink
-        v-if="dashboardPath"
-        :to="dashboardPath"
-        class="bg-[#1A1A1A] hover:bg-[#404040] text-white font-bold text-sm px-5 py-1.5 rounded-full transition-colors duration-200 cursor-pointer"
-      >
-        ไปที่ Dashboard
-      </NuxtLink>
-      <NuxtLink
-        v-else
-        to="/login"
-        class="bg-[#D1D1D1] hover:bg-[#BDBDBD] text-gray-800 font-bold text-sm px-5 py-1.5 rounded-full transition-colors duration-200 cursor-pointer"
-      >
-        เข้าสู่ระบบ
-      </NuxtLink>
-    </nav>
-
-    <!-- Page content -->
-    <div class="p-8">
-      <!-- เนื้อหาหน้าหลักใส่ที่นี่ -->
-    </div>
-
+  <div class="flex bg-[#F9FAFB]">
+    <AppSidebar />
+    <main>
+    </main>
   </div>
 </template>
 
