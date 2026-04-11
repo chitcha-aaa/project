@@ -1,12 +1,15 @@
 <template>
-  <div class="flex bg-[#F9FAFB]">
-    <AppSidebar />
-    <main>
+  <div class="">
+    <Navbar />
+    <main class="mt-5">
+      div
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
+import Navbar from '~/components/Navbar.vue'
+
 definePageMeta({
   layout: false
 })
