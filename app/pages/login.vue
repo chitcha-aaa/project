@@ -52,7 +52,7 @@
   <!-- Others login -->
   <div class="mt-4 mb-4 w-full flex justify-center ">
     <!-- gmail -->
-    <div class="bg-white w-1/3  p-2 flex justify-center items-center rounded-3xl cursor-pointer hover:shadow-md hover:scale-105 transition-all">
+    <div class="bg-white w-full sm:w-auto sm:px-8 p-2 flex justify-center items-center gap-2 rounded-3xl cursor-pointer hover:shadow-md hover:scale-105 transition-all">
       <div class="w-12 h-[2rem]">
         <img src="../assets/images/icon_google.png" alt="" class="w-full h-full object-cover">
       </div>
