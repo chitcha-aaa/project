@@ -26,5 +26,8 @@ export default defineNuxtConfig({
     redirect: false,
     // Service Role Key สำหรับ server-side เท่านั้น (invite user, admin operations)
     serviceKey: process.env.SUPABASE_SERVICE_KEY,
+    // ชี้ไปที่ไฟล์ types ที่ generate มาจาก Supabase CLI
+    // หลังจาก run: npx supabase gen types typescript --project-id hqtsrzlgatgtmzvhjeyh > types/database.types.ts
+    types: './types/database.types.ts',
   }
 });

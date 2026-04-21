@@ -1,20 +1,20 @@
 <template>
   <div class="w-full max-w-2xl font-sarabun">
 
-    <!-- ─── Card หลัก: กรอกโปรไฟล์ Reviewer ─────────────────────────────── -->
+    <!-- ─── Card หลัก: กรอกโปรไฟล์ ──────────────────────────────────────── -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
 
-      <!-- Card Header (สีเขียว — สีประจำ Reviewer) -->
-      <div class="bg-gradient-to-r from-green-600 to-green-500 px-8 py-6">
+      <!-- Card Header -->
+      <div class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
         <div class="flex items-center gap-4">
           <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center flex-shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </div>
           <div>
             <h1 class="text-xl font-bold text-white">ตั้งค่าโปรไฟล์ของคุณ</h1>
-            <p class="text-green-100 text-sm mt-0.5">สำหรับผู้ตรวจสอบบทความ (Reviewer) — กรอกข้อมูลให้ครบก่อนเริ่มใช้งาน</p>
+            <p class="text-blue-100 text-sm mt-0.5">สำหรับผู้แต่ง (Author) — กรอกข้อมูลให้ครบก่อนเริ่มใช้งาน</p>
           </div>
         </div>
       </div>
@@ -38,15 +38,15 @@
               <label class="text-sm font-semibold text-gray-700 block mb-1">
                 ชื่อจริง <span class="text-red-500">*</span>
               </label>
-              <input v-model="form.firstname_th" type="text" placeholder="เช่น สมหญิง" required
-                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition" />
+              <input v-model="form.firstname_th" type="text" placeholder="เช่น สมชาย" required
+                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
             </div>
             <div>
               <label class="text-sm font-semibold text-gray-700 block mb-1">
                 นามสกุล <span class="text-red-500">*</span>
               </label>
-              <input v-model="form.lastname_th" type="text" placeholder="เช่น รักวิจัย" required
-                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition" />
+              <input v-model="form.lastname_th" type="text" placeholder="เช่น ใจดี" required
+                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
             </div>
           </div>
         </div>
@@ -59,37 +59,39 @@
               <label class="text-sm font-semibold text-gray-700 block mb-1">
                 First Name <span class="text-red-500">*</span>
               </label>
-              <input v-model="form.firstname_eng" type="text" placeholder="e.g. Somying" required
-                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition" />
+              <input v-model="form.firstname_eng" type="text" placeholder="e.g. Somchai" required
+                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
             </div>
             <div>
               <label class="text-sm font-semibold text-gray-700 block mb-1">
                 Last Name <span class="text-red-500">*</span>
               </label>
-              <input v-model="form.lastname_eng" type="text" placeholder="e.g. Rakwichai" required
-                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition" />
+              <input v-model="form.lastname_eng" type="text" placeholder="e.g. Jaidee" required
+                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
             </div>
           </div>
         </div>
 
-        <!-- ─── ข้อมูลองค์กร ──────────────────────────────────────────────── -->
+        <!-- ─── สังกัด / ตำแหน่ง / จังหวัด ─────────────────────────────── -->
         <div>
           <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">ข้อมูลองค์กร</p>
           <div class="space-y-3">
+
             <div>
               <label class="text-sm font-semibold text-gray-700 block mb-1">
                 สังกัด / หน่วยงาน / มหาวิทยาลัย <span class="text-red-500">*</span>
               </label>
               <input v-model="form.institution" type="text" placeholder="เช่น มหาวิทยาลัยราชภัฏบุรีรัมย์" required
-                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition" />
+                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
             </div>
+
             <div class="grid grid-cols-2 gap-3">
               <div>
                 <label class="text-sm font-semibold text-gray-700 block mb-1">
                   ตำแหน่งทางวิชาการ <span class="text-red-500">*</span>
                 </label>
                 <select v-model="form.academic_position" required
-                  class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition bg-white">
+                  class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition bg-white">
                   <option value="" disabled>เลือกตำแหน่ง</option>
                   <option v-for="pos in academicPositions" :key="pos" :value="pos">{{ pos }}</option>
                 </select>
@@ -99,51 +101,27 @@
                   จังหวัด <span class="text-red-500">*</span>
                 </label>
                 <select v-model="form.province" required
-                  class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition bg-white">
+                  class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition bg-white">
                   <option value="" disabled>เลือกจังหวัด</option>
                   <option v-for="p in provinces" :key="p" :value="p">{{ p }}</option>
                 </select>
               </div>
             </div>
+
             <div>
               <label class="text-sm font-semibold text-gray-700 block mb-1">
                 เบอร์โทรศัพท์ <span class="text-red-500">*</span>
               </label>
               <input v-model="form.phone" type="tel" placeholder="เช่น 0812345678" required
-                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition" />
+                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
             </div>
+
           </div>
         </div>
 
-        <!-- ─── สาขาความเชี่ยวชาญ (เฉพาะ Reviewer) ───────────────────────── -->
-        <div>
-          <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">
-            สาขาความเชี่ยวชาญ
-            <span class="normal-case text-green-600 font-semibold ml-1">(สำคัญ: ใช้จับคู่กับบทความ)</span>
-          </p>
-          <div class="space-y-3">
-            <div>
-              <label class="text-sm font-semibold text-gray-700 block mb-1">
-                สาขาหลัก <span class="text-red-500">*</span>
-              </label>
-              <select v-model="form.expertise" required
-                class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition bg-white">
-                <option value="" disabled>เลือกสาขาความเชี่ยวชาญ</option>
-                <option v-for="ex in expertiseList" :key="ex" :value="ex">{{ ex }}</option>
-              </select>
-            </div>
-            <div>
-              <label class="text-sm font-semibold text-gray-700 block mb-1">รายละเอียดความเชี่ยวชาญเพิ่มเติม</label>
-              <textarea v-model="form.expertise_detail" rows="3"
-                placeholder="เช่น ปัญญาประดิษฐ์, การเรียนรู้ของเครื่อง, การประมวลผลภาษาธรรมชาติ"
-                class="w-full border border-gray-300 px-3 py-2 rounded-xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition resize-none" />
-            </div>
-          </div>
-        </div>
-
-        <!-- ─── Submit ─────────────────────────────────────────────────────── -->
+        <!-- ─── Submit Button ──────────────────────────────────────────────── -->
         <button type="submit" :disabled="isSaving"
-          class="w-full h-11 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2">
+          class="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2">
           <svg v-if="isSaving" class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
@@ -156,6 +134,7 @@
 
     <!-- ─── Card เปลี่ยนรหัสผ่าน (Optional) ─────────────────────────────── -->
     <div class="mt-4 bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+      <!-- Toggle Header -->
       <button type="button" @click="showPasswordSection = !showPasswordSection"
         class="w-full px-8 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200">
         <div class="flex items-center gap-2">
@@ -170,14 +149,21 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
         </svg>
       </button>
+
+      <!-- Password Form -->
       <div v-show="showPasswordSection" class="px-8 pb-6 space-y-4 border-t border-gray-100 pt-4">
-        <div v-if="pwErrorMsg"   class="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl">{{ pwErrorMsg }}</div>
-        <div v-if="pwSuccessMsg" class="bg-green-50 border border-green-200 text-green-700 text-sm px-4 py-3 rounded-xl">{{ pwSuccessMsg }}</div>
+        <div v-if="pwErrorMsg" class="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl">
+          {{ pwErrorMsg }}
+        </div>
+        <div v-if="pwSuccessMsg" class="bg-green-50 border border-green-200 text-green-700 text-sm px-4 py-3 rounded-xl">
+          {{ pwSuccessMsg }}
+        </div>
         <div>
           <label class="text-sm font-semibold text-gray-700 block mb-1">รหัสผ่านใหม่</label>
           <div class="relative">
-            <input :type="showPw ? 'text' : 'password'" v-model="newPassword" placeholder="อย่างน้อย 8 ตัวอักษร"
-              class="w-full h-10 border border-gray-300 px-3 pr-10 rounded-xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" />
+            <input :type="showPw ? 'text' : 'password'" v-model="newPassword"
+              placeholder="อย่างน้อย 8 ตัวอักษร"
+              class="w-full h-10 border border-gray-300 px-3 pr-10 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
             <button type="button" @click="showPw = !showPw"
               class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
               <svg v-if="!showPw" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -192,8 +178,9 @@
         </div>
         <div>
           <label class="text-sm font-semibold text-gray-700 block mb-1">ยืนยันรหัสผ่านใหม่</label>
-          <input type="password" v-model="confirmPassword" placeholder="กรอกรหัสผ่านอีกครั้ง"
-            class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" />
+          <input type="password" v-model="confirmPassword"
+            placeholder="กรอกรหัสผ่านอีกครั้ง"
+            class="w-full h-10 border border-gray-300 px-3 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
         </div>
         <button type="button" @click="handleChangePassword" :disabled="isChangingPw"
           class="w-full h-10 bg-gray-800 hover:bg-gray-700 text-white font-bold text-sm rounded-xl transition-colors duration-200 disabled:opacity-50">
@@ -206,28 +193,28 @@
 </template>
 
 <script setup lang="ts">
-
+// ใช้ layout "setup" → ซ่อนเมนูทั้งหมด
 definePageMeta({ layout: 'setup' })
 
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 
+// ─── Form Data ───────────────────────────────────────────────────────────────
 const form = reactive({
-  firstname_th:      '',
-  lastname_th:       '',
-  firstname_eng:     '',
-  lastname_eng:      '',
-  institution:       '',
+  firstname_th: '',
+  lastname_th: '',
+  firstname_eng: '',
+  lastname_eng: '',
+  institution: '',
   academic_position: '',
-  province:          '',
-  phone:             '',
-  expertise:         '',
-  expertise_detail:  '',
+  province: '',
+  phone: '',
 })
 
-const isSaving = ref(false)
-const errorMsg = ref('')
+const isSaving  = ref(false)
+const errorMsg  = ref('')
 
+// ─── Password Section ─────────────────────────────────────────────────────────
 const showPasswordSection = ref(false)
 const newPassword     = ref('')
 const confirmPassword = ref('')
@@ -236,41 +223,50 @@ const isChangingPw    = ref(false)
 const pwErrorMsg      = ref('')
 const pwSuccessMsg    = ref('')
 
-// Pre-fill ถ้ามีข้อมูลอยู่แล้ว
+// ─── Pre-fill ถ้ามีข้อมูลอยู่แล้ว (กรณีแก้ไขโปรไฟล์) ──────────────────────
 onMounted(async () => {
   if (!user.value) return
   const { data } = await supabase
     .from('profiles')
-    .select('firstname_th, lastname_th, firstname_eng, lastname_eng, institution, academic_position, province, phone, expertise, expertise_detail')
+    .select('firstname_th, lastname_th, firstname_eng, lastname_eng, institution, academic_position, province, phone')
     .eq('id', user.value.id)
     .single()
   if (data) {
-    const d = data as any
-    Object.assign(form, {
-      firstname_th:      d.firstname_th      || '',
-      lastname_th:       d.lastname_th       || '',
-      firstname_eng:     d.firstname_eng     || '',
-      lastname_eng:      d.lastname_eng      || '',
-      institution:       d.institution       || '',
-      academic_position: d.academic_position || '',
-      province:          d.province          || '',
-      phone:             d.phone             || '',
-      expertise:         d.expertise         || '',
-      expertise_detail:  d.expertise_detail  || '',
-    })
+    form.firstname_th      = data.firstname_th      || ''
+    form.lastname_th       = data.lastname_th       || ''
+    form.firstname_eng     = data.firstname_eng     || ''
+    form.lastname_eng      = data.lastname_eng      || ''
+    form.institution       = data.institution       || ''
+    form.academic_position = data.academic_position || ''
+    form.province          = data.province          || ''
+    form.phone             = data.phone             || ''
   }
 })
 
+// ─── Submit: บันทึกโปรไฟล์ ───────────────────────────────────────────────────
 const handleSave = async () => {
   errorMsg.value = ''
   isSaving.value = true
   try {
     const { error } = await supabase
       .from('profiles')
-      .update({ ...form, is_profile_complete: true } as any)
+      .update({
+        ...form,
+        is_profile_complete: true,   // ✅ set flag ว่ากรอกครบแล้ว
+      })
       .eq('id', user.value!.id)
+
     if (error) throw error
-    await navigateTo('/reviewer/home')
+
+    // ดึง role แล้ว redirect ไป home ของแต่ละ role
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.value!.id)
+      .single()
+
+    const role = (profile?.role || '').toLowerCase()
+    await navigateTo(`/${role}/home`)
   } catch (e: any) {
     errorMsg.value = `เกิดข้อผิดพลาด: ${e.message || 'โปรดลองอีกครั้ง'}`
   } finally {
@@ -278,17 +274,26 @@ const handleSave = async () => {
   }
 }
 
+// ─── เปลี่ยนรหัสผ่าน ─────────────────────────────────────────────────────────
 const handleChangePassword = async () => {
-  pwErrorMsg.value = ''
+  pwErrorMsg.value   = ''
   pwSuccessMsg.value = ''
-  if (newPassword.value.length < 8) { pwErrorMsg.value = 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร'; return }
-  if (newPassword.value !== confirmPassword.value) { pwErrorMsg.value = 'รหัสผ่านทั้งสองช่องไม่ตรงกัน'; return }
+
+  if (newPassword.value.length < 8) {
+    pwErrorMsg.value = 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร'
+    return
+  }
+  if (newPassword.value !== confirmPassword.value) {
+    pwErrorMsg.value = 'รหัสผ่านทั้งสองช่องไม่ตรงกัน'
+    return
+  }
+
   isChangingPw.value = true
   try {
     const { error } = await supabase.auth.updateUser({ password: newPassword.value })
     if (error) throw error
     pwSuccessMsg.value = '✓ เปลี่ยนรหัสผ่านสำเร็จ'
-    newPassword.value = ''
+    newPassword.value     = ''
     confirmPassword.value = ''
   } catch (e: any) {
     pwErrorMsg.value = `เกิดข้อผิดพลาด: ${e.message}`
@@ -297,23 +302,17 @@ const handleChangePassword = async () => {
   }
 }
 
+// ─── ข้อมูล Dropdown ──────────────────────────────────────────────────────────
 const academicPositions = [
-  'ศาสตราจารย์ (ศ.)','รองศาสตราจารย์ (รศ.)','ผู้ช่วยศาสตราจารย์ (ผศ.)',
-  'อาจารย์','อาจารย์พิเศษ','นักวิจัย','นักวิทยาศาสตร์',
-  'นักศึกษาระดับบัณฑิตศึกษา','นักศึกษา','อื่นๆ',
-]
-
-const expertiseList = [
-  'วิทยาศาสตร์และเทคโนโลยี',
-  'วิทยาการคอมพิวเตอร์และเทคโนโลยีสารสนเทศ',
-  'วิศวกรรมศาสตร์',
-  'บริหารธุรกิจและเศรษฐศาสตร์',
-  'มนุษยศาสตร์และสังคมศาสตร์',
-  'ศิลปกรรมศาสตร์',
-  'ครุศาสตร์และศึกษาศาสตร์',
-  'เกษตรศาสตร์',
-  'สาธารณสุขและพยาบาลศาสตร์',
-  'นิติศาสตร์และรัฐศาสตร์',
+  'ศาสตราจารย์ (ศ.)',
+  'รองศาสตราจารย์ (รศ.)',
+  'ผู้ช่วยศาสตราจารย์ (ผศ.)',
+  'อาจารย์',
+  'อาจารย์พิเศษ',
+  'นักวิจัย',
+  'นักวิทยาศาสตร์',
+  'นักศึกษาระดับบัณฑิตศึกษา',
+  'นักศึกษา',
   'อื่นๆ',
 ]
 

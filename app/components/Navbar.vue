@@ -24,7 +24,6 @@
                         class="relative h-full flex items-center"
                         @mouseenter="activeDropdown = menu.label"
                         @mouseleave="activeDropdown = null">
-                        <!-- ปุ่ม trigger: คลิก/แตะเพื่อ toggle -->
                         <button @click.stop="toggleDesktopDropdown(menu.label)"
                             class="relative flex items-center gap-1 transition-colors duration-200 px-1 py-1 whitespace-nowrap cursor-pointer bg-transparent border-none"
                             :class="activeDropdown === menu.label ? 'text-yellow-400' : 'text-gray-300 hover:text-yellow-400'">
@@ -42,7 +41,7 @@
                                 style="background: #f5c400;"></span>
                         </button>
 
-                        <!-- Dropdown Panel: แสดงเมื่อ activeDropdown ตรงกัน -->
+                        <!-- Dropdown Panel -->
                         <div class="absolute top-full left-0 min-w-[170px] pt-1 z-50 transition-all duration-200"
                             :class="activeDropdown === menu.label
                                 ? 'opacity-100 visible translate-y-0'
@@ -70,11 +69,75 @@
                 </template>
             </div>
 
-            <!-- ขวา: ปุ่ม Login + Hamburger -->
+            <!-- ขวา: Auth State + Hamburger -->
             <div class="flex items-center gap-3">
 
-                <!-- ปุ่ม Login (ซ่อนบนจอเล็กมาก) -->
-                <NuxtLink to="/login" class="hidden sm:block">
+                <!-- ─── กรณีที่ 1: Login แล้ว + profile ครบ → แสดงชื่อ + Dropdown ─── -->
+                <div v-if="isLoggedIn && isProfileComplete"
+                    class="hidden sm:block relative"
+                    @mouseenter="userDropdownOpen = true"
+                    @mouseleave="userDropdownOpen = false">
+
+                    <!-- User Button -->
+                    <button @click.stop="userDropdownOpen = !userDropdownOpen"
+                        class="flex items-center gap-2 font-sarabun text-sm font-semibold px-4 h-10 rounded-full transition-all duration-200 hover:scale-105 cursor-pointer"
+                        style="background: linear-gradient(135deg, #f5c400, #e0a800); color: #111111; box-shadow: 0 0 12px rgba(245,196,0,0.35);">
+                        <!-- Avatar Initial -->
+                        <span class="w-6 h-6 bg-black/20 rounded-full flex items-center justify-center text-xs font-bold">
+                            {{ avatarInitial }}
+                        </span>
+                        <span class="max-w-[120px] truncate">{{ displayName }}</span>
+                        <svg class="w-3 h-3 transition-transform duration-200 flex-shrink-0"
+                            :class="userDropdownOpen ? 'rotate-180' : ''"
+                            fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+
+                    <!-- User Dropdown Panel -->
+                    <div class="absolute top-full right-0 min-w-[180px] pt-2 z-50 transition-all duration-200"
+                        :class="userDropdownOpen
+                            ? 'opacity-100 visible translate-y-0'
+                            : 'opacity-0 invisible translate-y-1'">
+                        <div class="rounded-xl overflow-hidden shadow-2xl"
+                            style="background: #1E1E1E; border: 1px solid #f5c400;">
+
+                            <!-- ชื่อ + role -->
+                            <div class="px-4 py-3 border-b border-[#333]">
+                                <p class="text-white text-sm font-bold truncate">{{ displayName }}</p>
+                                <p class="text-yellow-400 text-xs capitalize">{{ userRole }}</p>
+                            </div>
+
+                            <!-- เมนู: แก้ไขโปรไฟล์ -->
+                            <NuxtLink :to="profileEditPath"
+                                class="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-yellow-400 hover:bg-[#2a2a2a] transition-colors duration-150"
+                                style="text-decoration: none;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                                <span class="text-sm font-sarabun">แก้ไขโปรไฟล์</span>
+                            </NuxtLink>
+
+                            <!-- Divider -->
+                            <div class="border-t border-[#333]"></div>
+
+                            <!-- เมนู: ออกจากระบบ -->
+                            <button @click="logout"
+                                class="w-full flex items-center gap-3 px-4 py-2.5 text-red-400 hover:text-red-300 hover:bg-[#2a2a2a] transition-colors duration-150">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
+                                <span class="text-sm font-sarabun">ออกจากระบบ</span>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ─── กรณีที่ 2: ยังไม่ login → แสดงปุ่มเข้าสู่ระบบ ──────────── -->
+                <NuxtLink v-else-if="!isLoggedIn" to="/login" class="hidden sm:block">
                     <button class="font-sarabun text-sm font-semibold px-5 w-40 h-10 rounded-full transition-all duration-200 hover:scale-105 active:scale-95 hover:cursor-pointer"
                         style="background: linear-gradient(135deg, #f5c400, #e0a800); color: #111111; box-shadow: 0 0 12px rgba(245,196,0,0.35);">
                         เข้าสู่ระบบ
@@ -96,14 +159,13 @@
             </div>
         </div>
 
-        <!-- Mobile Drawer (เมนูที่เปิดเมื่อกด hamburger) -->
+        <!-- Mobile Drawer -->
         <div class="lg:hidden absolute top-full left-0 w-full z-50 overflow-hidden transition-all duration-300 ease-in-out"
             :style="mobileOpen ? 'max-height: 700px; opacity: 1;' : 'max-height: 0px; opacity: 0;'"
             style="background: #1E1E1E; border-bottom: 2px solid #f5c400;">
             <div class="px-5 py-3 flex flex-col font-sarabun text-sm">
 
                 <template v-for="menu in menus" :key="menu.label">
-
                     <!-- Mobile: เมนูที่มี submenu -->
                     <div v-if="menu.children">
                         <button @click="toggleMobileMenu(menu.label)"
@@ -117,7 +179,6 @@
                                     clip-rule="evenodd" />
                             </svg>
                         </button>
-                        <!-- ซับเมนู accordion -->
                         <div class="overflow-hidden transition-all duration-300 ease-in-out"
                             :style="mobileExpandedMenu === menu.label ? 'max-height: 200px;' : 'max-height: 0px;'">
                             <a v-for="child in menu.children" :key="child.label" :href="child.href ?? '#'"
@@ -134,16 +195,30 @@
                         style="text-decoration: none;">
                         {{ menu.label }}
                     </a>
-
                 </template>
 
-                <!-- ปุ่ม Login ใน mobile drawer -->
-                <NuxtLink to="/login" class="mt-4 mb-2 sm:hidden">
-                    <button class="w-full font-sarabun text-sm font-semibold h-10 rounded-full transition-all duration-200 active:scale-95"
-                        style="background: linear-gradient(135deg, #f5c400, #e0a800); color: #111111;">
-                        เข้าสู่ระบบ
-                    </button>
-                </NuxtLink>
+                <!-- Mobile: Auth Section -->
+                <div class="mt-4 mb-2">
+                    <!-- Login แล้ว + profile ครบ -->
+                    <div v-if="isLoggedIn && isProfileComplete" class="space-y-2">
+                        <div class="text-white text-sm font-bold py-2">{{ displayName }}</div>
+                        <NuxtLink :to="profileEditPath"
+                            class="block py-2.5 text-gray-300 hover:text-yellow-400 border-b border-[#2a2a2a]"
+                            style="text-decoration: none;">
+                            แก้ไขโปรไฟล์
+                        </NuxtLink>
+                        <button @click="logout" class="w-full text-left py-2.5 text-red-400 hover:text-red-300">
+                            ออกจากระบบ
+                        </button>
+                    </div>
+                    <!-- ยังไม่ login -->
+                    <NuxtLink v-else-if="!isLoggedIn" to="/login" class="sm:hidden">
+                        <button class="w-full font-sarabun text-sm font-semibold h-10 rounded-full transition-all duration-200 active:scale-95"
+                            style="background: linear-gradient(135deg, #f5c400, #e0a800); color: #111111;">
+                            เข้าสู่ระบบ
+                        </button>
+                    </NuxtLink>
+                </div>
 
             </div>
         </div>
@@ -152,34 +227,47 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+// Nuxt 3 auto-imports: ref, onMounted, onUnmounted
 
-// state ของ hamburger (เปิด/ปิด)
+// ─── useUserProfile composable ─────────────────────────────────────────────────
+const {
+    displayName,
+    avatarInitial,
+    isLoggedIn,
+    isProfileComplete,
+    userRole,
+    profileEditPath,
+    fetchProfile,
+    logout,
+} = useUserProfile()
+
+// ─── Mobile Drawer State ───────────────────────────────────────────────────────
 const mobileOpen = ref(false)
-
-// ชื่อเมนูที่กำลัง expand อยู่ใน mobile (null = ปิดหมด)
 const mobileExpandedMenu = ref(null)
-
-// desktop dropdown: ชื่อเมนูที่เปิดอยู่ (hover หรือ tap)
 const activeDropdown = ref(null)
+const userDropdownOpen = ref(false)
 
 function toggleMobileMenu(label) {
     mobileExpandedMenu.value = mobileExpandedMenu.value === label ? null : label
 }
 
 function toggleDesktopDropdown(label) {
-    // tap: ถ้าเปิดอยู่แล้ว → ปิด, ถ้าปิดอยู่ → เปิด
     activeDropdown.value = activeDropdown.value === label ? null : label
 }
 
-// ปิด dropdown เมื่อคลิกที่อื่น
 function handleOutsideClick() {
     activeDropdown.value = null
+    userDropdownOpen.value = false
 }
 
-onMounted(() => document.addEventListener('click', handleOutsideClick))
+// รวม onMounted เป็นตัวเดียว
+onMounted(() => {
+    fetchProfile()  // โหลด profile
+    document.addEventListener('click', handleOutsideClick)  // ปิด dropdown เมื่อคลิกที่อื่น
+})
 onUnmounted(() => document.removeEventListener('click', handleOutsideClick))
 
+// ─── Menu Data ─────────────────────────────────────────────────────────────────
 const menus = [
     { label: 'หน้าแรก', href: '/' },
     {
