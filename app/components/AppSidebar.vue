@@ -58,8 +58,8 @@
         <!-- ─── ส่วนล่าง: User Info / Login Button ───────────────────────── -->
         <div class="border-t border-[#E5E7EB] bg-white">
 
-            <!-- กรณี: Login แล้ว + profile ครบ → แสดงชื่อ + dropdown -->
-            <div v-if="isLoggedIn && isProfileComplete" class="p-3">
+            <!-- กรณี: Login แล้ว → แสดงชื่อ + dropdown -->
+            <div v-if="isLoggedIn" class="p-3">
 
                 <!-- User Card -->
                 <div class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-50 transition-colors duration-150">
@@ -167,7 +167,7 @@ const menusByRole: Record<string, MenuGroup[]> = {
 }
 
 // เมนูที่แสดงตาม role
-const currentMenus = computed<MenuGroup[]>(() => menusByRole[userRole.value] || menusByRole['admin'])
+const currentMenus = computed<MenuGroup[]>(() => (menusByRole[userRole.value] || menusByRole['admin']) as MenuGroup[])
 
 // ─── ปุ่มบนสุด ─────────────────────────────────────────────────────────────────
 const topActionConfig = computed(() => {

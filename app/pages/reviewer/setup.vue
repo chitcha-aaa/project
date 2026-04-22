@@ -265,12 +265,32 @@ const handleSave = async () => {
   errorMsg.value = ''
   isSaving.value = true
   try {
-    const { error } = await supabase
+    const { data: { user: authUser } } = await supabase.auth.getUser()
+    if (!authUser) throw new Error("Session หมดอายุ กรุณาเข้าสู่ระบบใหม่")
+
+    const { error, data } = await supabase
       .from('profiles')
-      .update({ ...form, is_profile_complete: true } as any)
-      .eq('id', user.value!.id)
+      .update({
+        firstname_th:      form.firstname_th,
+        lastname_th:       form.lastname_th,
+        firstname_eng:     form.firstname_eng,
+        lastname_eng:      form.lastname_eng,
+        institution:       form.institution,
+        academic_position: form.academic_position,
+        province:          form.province,
+        phone:             form.phone,
+        expertise:         form.expertise,
+        expertise_detail:  form.expertise_detail,
+        is_profile_complete: true,
+      } as never)
+      .eq('id', authUser.id)
+      .select()
+      
     if (error) throw error
-    await navigateTo('/reviewer/home')
+    if (!data || data.length === 0) {
+      throw new Error("บันทึกไม่สำเร็จ (Row Level Security หรือฐานข้อมูลไม่ให้สิทธิ์ Update)")
+    }
+    window.location.href = '/reviewer/home'
   } catch (e: any) {
     errorMsg.value = `เกิดข้อผิดพลาด: ${e.message || 'โปรดลองอีกครั้ง'}`
   } finally {

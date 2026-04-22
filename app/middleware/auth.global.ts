@@ -22,7 +22,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   // ─── กรณีที่ 2: Login แล้ว → เช็ค is_profile_complete ──────────────────
   if (session && isProtected) {
-    const { data: profile } = await supabase
+    const { data: profile }: any = await supabase
       .from('profiles')
       .select('role, is_profile_complete')
       .eq('id', session.user.id)

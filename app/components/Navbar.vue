@@ -72,8 +72,8 @@
             <!-- ขวา: Auth State + Hamburger -->
             <div class="flex items-center gap-3">
 
-                <!-- ─── กรณีที่ 1: Login แล้ว + profile ครบ → แสดงชื่อ + Dropdown ─── -->
-                <div v-if="isLoggedIn && isProfileComplete"
+                <!-- ─── กรณีที่ 1: Login แล้ว → แสดงชื่อ + Dropdown ─── -->
+                <div v-if="isLoggedIn"
                     class="hidden sm:block relative"
                     @mouseenter="userDropdownOpen = true"
                     @mouseleave="userDropdownOpen = false">
@@ -199,8 +199,8 @@
 
                 <!-- Mobile: Auth Section -->
                 <div class="mt-4 mb-2">
-                    <!-- Login แล้ว + profile ครบ -->
-                    <div v-if="isLoggedIn && isProfileComplete" class="space-y-2">
+                    <!-- Login แล้ว -->
+                    <div v-if="isLoggedIn" class="space-y-2">
                         <div class="text-white text-sm font-bold py-2">{{ displayName }}</div>
                         <NuxtLink :to="profileEditPath"
                             class="block py-2.5 text-gray-300 hover:text-yellow-400 border-b border-[#2a2a2a]"
