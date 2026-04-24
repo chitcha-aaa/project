@@ -48,11 +48,12 @@
                                 : 'opacity-0 invisible translate-y-1'">
                             <div class="rounded-lg overflow-hidden shadow-2xl"
                                 style="background: #1E1E1E; border: 1px solid #f5c400;">
-                                <a v-for="child in menu.children" :key="child.label" :href="child.href ?? '#'"
-                                    class="flex items-center gap-2 px-4 py-2.5 text-gray-300 hover:text-yellow-400 hover:bg-[#2a2a2a] transition-colors duration-150 whitespace-nowrap"
+                                <button v-for="child in menu.children" :key="child.label" 
+                                    @click="handleMenuClick(child)"
+                                    class="flex items-center gap-2 px-4 py-2.5 w-full text-gray-300 hover:text-yellow-400 hover:bg-[#2a2a2a] transition-colors duration-150 whitespace-nowrap hover:cursor-pointer"
                                     style="text-decoration: none;">
                                     {{ child.label }}
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -181,11 +182,11 @@
                         </button>
                         <div class="overflow-hidden transition-all duration-300 ease-in-out"
                             :style="mobileExpandedMenu === menu.label ? 'max-height: 200px;' : 'max-height: 0px;'">
-                            <a v-for="child in menu.children" :key="child.label" :href="child.href ?? '#'"
-                                class="flex items-center gap-2 pl-5 py-2.5 text-gray-400 hover:text-yellow-400 transition-colors duration-150 border-b border-[#252525]"
-                                style="text-decoration: none;">
+                            <button v-for="child in menu.children" :key="child.label"
+                                @click="handleMenuClick(child)"
+                                class="w-full flex items-center gap-2 pl-5 py-2.5 text-gray-400 hover:text-yellow-400 transition-colors duration-150 border-b border-[#252525] cursor-pointer">
                                 <span style="color: #f5c400;">›</span> {{ child.label }}
-                            </a>
+                            </button>
                         </div>
                     </div>
 
@@ -224,6 +225,74 @@
         </div>
 
     </div>
+
+    <!-- ─── Auth Required Modal ──────────────────────────────────────────────── -->
+    <Teleport to="body">
+        <Transition name="modal-fade">
+            <div v-if="showAuthModal"
+                class="fixed inset-0 z-[9999] flex sm:items-center sm:justify-center items-end"
+                style="background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);"
+                @click.self="showAuthModal = false">
+
+                <!-- Mobile: bottom sheet / Desktop: center card -->
+                <Transition name="modal-up">
+                    <div v-if="showAuthModal"
+                        class="w-full sm:max-w-sm sm:rounded-2xl rounded-t-2xl overflow-hidden shadow-2xl font-sarabun"
+                        style="background: #1E1E1E; border: 1px solid #f5c400;">
+
+                        <!-- Drag handle (มือถือเท่านั้น) -->
+                        <div class="sm:hidden flex justify-center pt-3 pb-1">
+                            <div class="w-10 h-1 rounded-full" style="background:#444;"></div>
+                        </div>
+
+                        <!-- Header -->
+                        <div class="px-5 sm:px-6 pt-4 sm:pt-6 pb-3 sm:pb-4 flex flex-col items-center gap-2 sm:gap-3">
+                            <!-- Icon -->
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center"
+                                style="background: rgba(245,196,0,0.15); border: 2px solid #f5c400;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="#f5c400" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                            </div>
+                            <!-- Title -->
+                            <h2 class="text-white text-base sm:text-lg font-bold text-center">
+                                โปรดทำการเข้าสู่ระบบก่อน
+                            </h2>
+                            <p class="text-gray-400 text-xs sm:text-sm text-center leading-relaxed">
+                                คุณต้องเข้าสู่ระบบเพื่อเข้าถึงฟีเจอร์นี้
+                            </p>
+                        </div>
+
+                        <!-- Divider -->
+                        <div class="border-t border-[#333]"></div>
+
+                        <!-- Actions -->
+                        <div class="px-4 sm:px-6 py-4 flex flex-col-reverse sm:flex-row gap-2 sm:gap-3">
+                            <!-- ปุ่มยกเลิก -->
+                            <button
+                                @click="showAuthModal = false"
+                                class="flex-1 h-11 py-2 rounded-xl font-semibold text-sm transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+                                style="background: #2a2a2a; color: #9ca3af; border: 1px solid #444;">
+                                ยกเลิก
+                            </button>
+                            <!-- ปุ่มเข้าสู่ระบบ -->
+                            <button
+                                @click="goToLogin"
+                                class="flex-1 h-11 py-2 rounded-xl font-semibold text-sm transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+                                style="background: linear-gradient(135deg, #f5c400, #e0a800); color: #111111; box-shadow: 0 0 12px rgba(245,196,0,0.35);">
+                                เข้าสู่ระบบ
+                            </button>
+                        </div>
+
+                        <!-- Safe area padding (iOS) -->
+                        <div class="sm:hidden h-safe-area-inset-bottom" style="padding-bottom: env(safe-area-inset-bottom);"></div>
+
+                    </div>
+                </Transition>
+            </div>
+        </Transition>
+    </Teleport>
+
 </template>
 
 <script setup>
@@ -273,7 +342,7 @@ const menus = [
     {
         label: 'บทความ',
         children: [
-            { label: 'ส่งบทความ',       href: '#' },
+            { label: 'ส่งบทความ',       href: '/author/SubmitArticle', requiresAuth: true },
             { label: 'รูปแบบบทความ',    href: '#' },
             { label: 'บทความย้อนหลัง',  href: '#' },
         ]
@@ -285,4 +354,66 @@ const menus = [
     { label: 'เกี่ยวกับงานประชุม',  href: '#' },
     { label: 'คู่มือติดต่อ',        href: '#' },
 ]
+
+const user = useSupabaseUser()
+
+// ─── Auth Modal State ──────────────────────────────────────────────────────────
+const showAuthModal = ref(false)
+
+function goToLogin() {
+    showAuthModal.value = false
+    navigateTo('/login')
+}
+
+const handleMenuClick = (menu) => {
+    activeDropdown.value = null
+    mobileOpen.value = false
+
+    if (menu.requiresAuth && !user.value) {
+        showAuthModal.value = true
+        return
+    }
+
+    navigateTo(menu.href)
+}
 </script>
+
+<style scoped>
+/* Modal backdrop fade */
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+    opacity: 0;
+}
+
+/*
+  modal-up:
+  - มือถือ (< 640px)  → slide ขึ้นจากด้านล่าง
+  - tablet / desktop  → scale + fade จากกลางจอ
+*/
+.modal-up-enter-active,
+.modal-up-leave-active {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+}
+
+/* Mobile: slide from bottom */
+@media (max-width: 639px) {
+    .modal-up-enter-from,
+    .modal-up-leave-to {
+        transform: translateY(100%);
+        opacity: 1;
+    }
+}
+
+/* Tablet / Desktop: scale from center */
+@media (min-width: 640px) {
+    .modal-up-enter-from,
+    .modal-up-leave-to {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+}
+</style>

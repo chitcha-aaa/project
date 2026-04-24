@@ -20,7 +20,7 @@
         เชิญ Reviewer ใหม่
       </h2>
 
-      <form @submit.prevent="handleInvite" class="flex gap-3">
+      <form @submit.prevent="handleInvite" class="flex gap-3"> <!--เป็กการเรียกใช้ฟังก์ชัน handleInvite-->
         <input
           type="email"
           v-model="inviteEmail"
@@ -122,7 +122,7 @@
 // layout 'sidebar' → AppSidebar โหลดอัตโนมัติจาก layouts/sidebar.vue
 definePageMeta({ layout: 'sidebar' })
 
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient() //เรียนใช้ฐานข้อมูล Supabase
 const { displayName, fetchProfile } = useUserProfile()
 
 onMounted(() => {
