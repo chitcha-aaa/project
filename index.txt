@@ -1,2 +1,24 @@
-ref, @click, :class="selectedOption ? 'text-gray-900 font-medium' : 'text-slate-600'", <p>{{ selectedOption || 'โปรดเลือกประเภท' }}</p>, v-show="isOpen", v-for="(option, index) in options" :key="index"
- @click.stop="selectOption(option)" 
+                                <div>
+                                    <label for="" class="text-sm font-semibold text-gray-700">ระดับผู้ส่งผลงาน</label>
+                                    <div class="flex gap-2 mt-1">
+                                        <button
+                                            class="p-2 flex-1 rounded-xl text-center bg-gray-200 text-sm 
+                                                focus:bg-yellow-400 focus:text-gray-900 hover:cursor-pointer hover:bg-gray-300">ปริญญาตรี</button>
+                                        <button
+                                            class="p-2 flex-1 rounded-xl text-center bg-gray-200 text-sm 
+                                                focus:bg-yellow-400 focus:text-gray-900 hover:cursor-pointer hover:bg-gray-300">บุคคลทั่วไป
+                                            / นักวิจัย</button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="" class="text-sm font-semibold text-gray-700">รูปแบบการนำเสนอ</label>
+                                    <div class="flex gap-2 mt-1">
+                                        <button
+                                            class="p-2 flex-1 rounded-xl text-center bg-gray-200 text-sm 
+                                                focus:bg-yellow-400 focus:text-gray-900 hover:cursor-pointer hover:bg-gray-300">Online</button>
+                                        <button
+                                            class="p-2 flex-1 rounded-xl text-center bg-gray-200 text-sm 
+                                                focus:bg-yellow-400 focus:text-gray-900 hover:cursor-pointer hover:bg-gray-300">Onsite</button>
+                                    </div>
+                                </div>

@@ -2,7 +2,7 @@
     <div ref="dropdownContainer" @click="toggleDropdown"
         class="relative bg-slate-300 w-full max-w-[300px] p-2 rounded-xl flex items-center mt-1 hover:cursor-pointer">
         <div class="text-sm" :class="modelValue ? 'text-gray-900 font-medium' : 'text-slate-600'">
-            <p>{{ modelValue || 'โปรดเลือกสาขาวิชา' }}</p>
+            <p>{{ modelValue || 'โปรดเลือกคีย์เวิร์ด' }}</p>
         </div>
         <div id="dropdown_icon"
             class="w-5 h-5 ml-auto flex justify-center items-center transition-transform duration-300">

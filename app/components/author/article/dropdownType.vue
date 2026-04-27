@@ -1,8 +1,8 @@
 <template>
     <div ref="dropdownContainer" @click="toggleDropdown"
-        class="relative bg-slate-300 w-full max-w-[300px] h-10 p-2 rounded-xl flex items-center mt-1 hover:cursor-pointer">
-        <div class="text-sm" :class="selectedOption ? 'text-gray-900 font-medium' : 'text-slate-600'">
-            <p>{{ selectedOption || 'โปรดเลือกประเภท' }}</p>
+        class="relative bg-slate-300 w-full max-w-[300px] p-2 rounded-xl flex items-center mt-1 hover:cursor-pointer">
+        <div class="text-sm" :class="modelValue ? 'text-gray-900 font-medium' : 'text-slate-600'">
+            <p>{{ modelValue || 'โปรดเลือกประเภท' }}</p>
         </div>
         <div id="dropdown_icon"
             class="w-5 h-5 ml-auto flex justify-center items-center transition-transform duration-300">
@@ -28,8 +28,10 @@
 <script setup>
     import { ref, onMounted, onUnmounted } from 'vue'
 
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
 const isOpen = ref(false) //สถานะ เปิด/ปิดเมนู
-const selectedOption = ref(''); //ค่าที่ถูกเลือก
 const dropdownContainer = ref(null)
 
 const options = [
@@ -44,7 +46,7 @@ const toggleDropdown = () => {
 
 // 3. ฟังก์ชันเมื่อผู้ใช้คลิกเลือก
 const selectOption = (option) => {
-    selectedOption.value = option // อัปเดตค่าที่เลือก
+    emit('update:modelValue', option) // อัปเดตค่าที่เลือก
     isOpen.value = false // ปิดเมนู
 }
 
