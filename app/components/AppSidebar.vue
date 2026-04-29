@@ -145,7 +145,7 @@ const menusByRole: Record<string, MenuGroup[]> = {
             title: 'จัดการผู้ใช้',
             items: [
                 { label: 'รายชื่อผู้ใช้', href: '/admin/home' },
-                { label: 'เชิญ Reviewer', href: '/admin/home' },
+                { label: 'เชิญ Reviewer', href: '/admin/invite' },
             ],
         },
     ],
