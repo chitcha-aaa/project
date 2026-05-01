@@ -24,7 +24,8 @@
                                         class="p-2 flex-1 rounded-xl text-center text-sm hover:cursor-pointer hover:bg-yellow-300 transition-colors">ปริญญาตรี</button>
                                     <button type="button" @click="form.submitter_level = 'บุคคลทั่วไป / นักวิจัย'"
                                         :class="form.submitter_level === 'บุคคลทั่วไป / นักวิจัย' ? 'bg-yellow-400 text-gray-900' : 'bg-gray-200 text-gray-700'"
-                                        class="p-2 flex-1 rounded-xl text-center text-sm hover:cursor-pointer hover:bg-yellow-300 transition-colors">บุคคลทั่วไป / นักวิจัย</button>
+                                        class="p-2 flex-1 rounded-xl text-center text-sm hover:cursor-pointer hover:bg-yellow-300 transition-colors">บุคคลทั่วไป
+                                        / นักวิจัย</button>
                                 </div>
                             </div>
 
@@ -163,13 +164,15 @@
                             </div>
 
                             <div>
-                                <label for="" class="text-sm font-semibold text-gray-700">อัพโหลดไฟล์บทความ (PDF)</label>
+                                <label for="" class="text-sm font-semibold text-gray-700">อัพโหลดไฟล์บทความ
+                                    (PDF)</label>
                                 <div @click="triggerFileInput" @dragover.prevent @drop="handleFileDrop"
                                     class="w-full border-2 border-dashed rounded-[5px] mt-1 py-4 hover:bg-gray-50 transition-colors cursor-pointer"
                                     :class="file ? 'border-green-400 bg-green-50' : 'border-gray-300'">
-                                    
-                                    <input type="file" ref="fileInput" @change="handleFileSelect" accept="application/pdf" class="hidden">
-                                    
+
+                                    <input type="file" ref="fileInput" @change="handleFileSelect"
+                                        accept="application/pdf" class="hidden">
+
                                     <div v-if="!file" class="w-full max-w-[250px] mx-auto text-gray-500">
                                         <div>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -179,7 +182,8 @@
                                             </svg>
                                         </div>
                                         <div class="mt-2">
-                                            <p class="text-sm text-center font-medium">คลิกเพื่ออัพโหลด หรือ ลากไฟล์มาวาง</p>
+                                            <p class="text-sm text-center font-medium">คลิกเพื่ออัพโหลด หรือ
+                                                ลากไฟล์มาวาง</p>
                                         </div>
                                         <div>
                                             <p class="text-xs text-center mt-1">รองรับไฟล์ PDF ขนาดไม่เกิน 10 MB</p>
@@ -187,14 +191,24 @@
                                     </div>
                                     <div v-else class="w-full px-6 flex items-center justify-between">
                                         <div class="flex items-center gap-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M11.363 2c4.155 0 2.637 6 2.637 6s6-1.65 6 2.457v11.543h-16v-20h7.363zm.826-2h-10.189v24h20v-14.386c0-2.391-6.648-9.614-9.811-9.614zm4.811 13h-2.628v3.688h1.59v1.527h-1.59v3.023h-1.611v-8.238h4.239v-1.118v1.118zm-4.706-1.118h-1.669v8.238h1.832c2.091 0 2.831-1.393 2.831-3.662v-1.189c0-1.996-.549-3.387-2.994-3.387zm-1.597 1.706h.914c.83 0 1.258.423 1.258 1.831v1.144c0 1.488-.231 1.857-1.187 1.857h-.985v-4.832zm-5.011 4.708h-1.077v1.824h-1.611v-8.238h2.955c1.921 0 2.766 1.054 2.766 3.011v.439c0 2.215-.992 2.964-3.033 2.964zm-1.077-1.424h1.161c.883 0 1.283-.418 1.283-1.613v-.357c0-1.066-.312-1.481-1.229-1.481h-1.215v3.451z"/></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500"
+                                                fill="currentColor" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M11.363 2c4.155 0 2.637 6 2.637 6s6-1.65 6 2.457v11.543h-16v-20h7.363zm.826-2h-10.189v24h20v-14.386c0-2.391-6.648-9.614-9.811-9.614zm4.811 13h-2.628v3.688h1.59v1.527h-1.59v3.023h-1.611v-8.238h4.239v-1.118v1.118zm-4.706-1.118h-1.669v8.238h1.832c2.091 0 2.831-1.393 2.831-3.662v-1.189c0-1.996-.549-3.387-2.994-3.387zm-1.597 1.706h.914c.83 0 1.258.423 1.258 1.831v1.144c0 1.488-.231 1.857-1.187 1.857h-.985v-4.832zm-5.011 4.708h-1.077v1.824h-1.611v-8.238h2.955c1.921 0 2.766 1.054 2.766 3.011v.439c0 2.215-.992 2.964-3.033 2.964zm-1.077-1.424h1.161c.883 0 1.283-.418 1.283-1.613v-.357c0-1.066-.312-1.481-1.229-1.481h-1.215v3.451z" />
+                                            </svg>
                                             <div class="flex flex-col">
                                                 <span class="text-sm font-semibold text-gray-800">{{ file.name }}</span>
-                                                <span class="text-xs text-gray-500">{{ (file.size / (1024 * 1024)).toFixed(2) }} MB</span>
+                                                <span class="text-xs text-gray-500">{{ (file.size / (1024 *
+                                                    1024)).toFixed(2) }} MB</span>
                                             </div>
                                         </div>
-                                        <button type="button" @click.stop="removeFile" class="text-red-500 hover:bg-red-100 p-2 rounded-full transition-colors">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+                                        <button type="button" @click.stop="removeFile"
+                                            class="text-red-500 hover:bg-red-100 p-2 rounded-full transition-colors">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M6 18 18 6M6 6l12 12" />
+                                            </svg>
                                         </button>
                                     </div>
                                 </div>
@@ -206,12 +220,13 @@
                 <!-- ปุ่มยกเลิก / ส่งบทความ -->
                 <div class="w-full flex justify-end mt-1">
                     <div class="w-full max-w-[300px] pt-2 flex gap-2 justify-around text-sm">
-                        <div class="bg-gray-200 flex-1 py-2 text-center rounded-xl hover:cursor-pointer hover:bg-red-400 hover:text-white">
+                        <div
+                            class="bg-gray-200 flex-1 py-2 text-center rounded-xl hover:cursor-pointer hover:bg-red-400 hover:text-white">
                             ยกเลิก
                         </div>
 
-                        <button type="button" @click="submitArticle" :disabled="isSubmitting"
-                            class="bg-gray-200 flex-1 py-2 text-center rounded-xl hover:cursor-pointer hover:bg-yellow-500 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed">
+                <button type="button" @click="submitArticle" :disabled="isSubmitting"
+                            class="bg-gray-200 flex-1 py-2 text-center rounded-xl hover:cursor-pointer hover:bg-yellow-500 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all font-bold">
                             {{ isSubmitting ? 'กำลังส่งข้อมูล...' : 'ส่งบทความ' }}
                         </button>
                     </div>
@@ -219,6 +234,9 @@
             </form>
         </div>
     </div>
+
+
+
 
     <!-- Co-Author Modal -->
     <div v-if="showAuthorModal"
@@ -384,6 +402,8 @@ const handleClickOutside = (event) => {
 const isSubmitting = ref(false)
 
 const submitArticle = async () => {
+
+
     // 1. Validation
     if (!form.value.submitter_level || !form.value.presentation_format || !form.value.title_th || !file.value) {
         alert('กรุณากรอกข้อมูลที่จำเป็น (ระดับผู้ส่ง, รูปแบบ, ชื่อบทความ) และอัพโหลดไฟล์บทความให้ครบถ้วน')
@@ -430,6 +450,8 @@ const submitArticle = async () => {
         if (paperError) throw new Error('ไม่สามารถบันทึกข้อมูลบทความได้: ' + paperError.message)
 
         const paperId = insertedPaper.id
+
+
 
         // 3. Upload File to Storage
         const fileExt = file.value.name.split('.').pop()
@@ -482,12 +504,12 @@ const submitArticle = async () => {
         if (authorsError) throw new Error('บันทึกรายชื่อผู้ร่วมเขียนไม่สำเร็จ: ' + authorsError.message)
 
         // Success
-        alert('ส่งบทความสำเร็จ! รอการตรวจสอบจากเจ้าหน้าที่')
-        
-        // Reset form or navigate away
+        alert('ส่งบทความสำเร็จ! ข้อมูลของคุณถูกบันทึกแล้ว')
         window.location.reload()
         
     } catch (error) {
+
+
         console.error('Error submitting article:', error)
         alert('เกิดข้อผิดพลาด: ' + error.message)
     } finally {

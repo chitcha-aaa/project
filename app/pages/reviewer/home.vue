@@ -163,8 +163,11 @@
                   :class="reviewForm.result === opt.value ? opt.activeClass : 'border-gray-100 hover:border-gray-200 bg-gray-50'">
                   <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold"
                     :class="reviewForm.result === opt.value ? 'bg-white/20' : 'bg-white text-gray-400'">
-                    <component :is="opt.icon" class="h-5 w-5" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="opt.icon" />
+                    </svg>
                   </div>
+
                   <span class="text-xs font-bold">{{ opt.label }}</span>
                 </button>
               </div>
@@ -210,11 +213,9 @@
 </template>
 
 <script setup lang="ts">
-import { 
-  CheckCircleIcon, 
-  ExclamationCircleIcon, 
-  XCircleIcon 
-} from '@heroicons/vue/24/outline'
+// ใช้ SVG Paths แทนการใช้ icons จาก library ภายนอกเพื่อหลีกเลี่ยงปัญหา package missing
+
+
 
 // layout 'sidebar' → AppSidebar จะโหลดอัตโนมัติ (layouts/sidebar.vue)
 definePageMeta({ layout: 'sidebar' })
@@ -291,22 +292,23 @@ const reviewOptions = [
   { 
     label: 'ผ่าน (Pass)', 
     value: 'pass', 
-    icon: CheckCircleIcon,
+    icon: 'M5 13l4 4L19 7', // Path สำหรับ SVG
     activeClass: 'border-green-600 bg-green-600 text-white shadow-lg shadow-green-100'
   },
   { 
     label: 'ผ่านมีเงื่อนไข', 
     value: 'conditional_pass', 
-    icon: ExclamationCircleIcon,
+    icon: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
     activeClass: 'border-yellow-500 bg-yellow-500 text-white shadow-lg shadow-yellow-100'
   },
   { 
     label: 'ไม่ผ่าน (Reject)', 
     value: 'reject', 
-    icon: XCircleIcon,
+    icon: 'M6 18L18 6M6 6l12 12',
     activeClass: 'border-red-600 bg-red-600 text-white shadow-lg shadow-red-100'
   }
 ]
+
 
 const openReviewModal = (item: any) => {
   selectedItem.value = item
@@ -335,9 +337,10 @@ const submitReview = async () => {
         result: reviewForm.result,
         comments: reviewForm.comments,
         created_at: new Date().toISOString()
-      }, {
+      } as any, {
         onConflict: 'paper_id, reviewer_id'
       })
+
 
     if (error) throw error
 
